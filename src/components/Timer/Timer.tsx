@@ -1,7 +1,10 @@
+import { Box, Button } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 
 export const Timer = (): JSX.Element => {
-  const [seconds, setSeconds] = useState(25);
+  const time = 25;
+  const [seconds, setSeconds] = useState(time * 60000);
   const [isActive, setIsActive] = useState(false);
 
   function toggle() {
@@ -9,7 +12,7 @@ export const Timer = (): JSX.Element => {
   }
 
   function reset() {
-    setSeconds(25);
+    setSeconds(time * 60000);
     setIsActive(false);
   }
 
@@ -18,7 +21,7 @@ export const Timer = (): JSX.Element => {
     if (isActive) {
       interval = setInterval(() => {
         if (seconds > 0) {
-          setSeconds((prevSeconds) => prevSeconds - 1);
+          setSeconds((prevSeconds) => prevSeconds - 1000);
         }
       }, 1000);
     } else if (!isActive && seconds !== 0) {
@@ -28,18 +31,14 @@ export const Timer = (): JSX.Element => {
   }, [isActive, seconds]);
 
   return (
-    <div className="row">
-      <div className="time">{seconds}s</div>
-      <button
-        type="button"
-        className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
-        onClick={toggle}
-      >
+    <Box>
+      <div className="time">{dayjs(seconds).format('m:ss')}</div>
+      <Button type="button" onClick={() => toggle()}>
         {isActive ? 'Pause' : 'Start'}
-      </button>
-      <button type="button" className="button" onClick={reset}>
+      </Button>
+      <Button type="button" onClick={() => reset()}>
         Reset
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
