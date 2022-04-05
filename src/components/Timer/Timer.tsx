@@ -2,8 +2,11 @@ import { Box, Button } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 
-export const Timer = (): JSX.Element => {
-  const time = 25;
+interface TimerProps {
+  time: number;
+}
+
+export const Timer = ({ time }: TimerProps): JSX.Element => {
   const [seconds, setSeconds] = useState(time * 60000);
   const [isActive, setIsActive] = useState(false);
 
